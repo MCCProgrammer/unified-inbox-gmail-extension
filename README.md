@@ -24,8 +24,9 @@ anywhere else (the extension's Content Security Policy only allows Google's endp
 It used to be on the Chrome Web Store. Google requires every app that reads and changes
 Gmail (the `gmail.modify` scope) to pass a paid security assessment every year, Chrome
 extensions without a server included. Instead, Unified Inbox is free and open source:
-you run it with **your own Google Cloud project**, in Google's *Testing* mode, which needs
-no verification for the accounts you list yourself. It takes about ten minutes, once.
+you run it with **your own Google Cloud project**. An app that you publish for yourself
+without verification works for up to 100 Google accounts, which is plenty for your own
+inboxes. It takes about ten minutes, once.
 
 ## Set up
 
@@ -49,10 +50,15 @@ no verification for the accounts you list yourself. It takes about ten minutes, 
 In **APIs & Services → OAuth consent screen** (also called *Google Auth Platform*):
 
 1. **Branding:** an app name (for example "My Unified Inbox") and your email.
-2. **Audience:** *External*, publishing status **Testing**. Under **Test users**, add every
-   Gmail address you want in the unified inbox (up to 100).
-3. **Data access:** add the scope `https://www.googleapis.com/auth/gmail.modify` (Gmail:
+2. **Data access:** add the scope `https://www.googleapis.com/auth/gmail.modify` (Gmail:
    read, compose and send, and organize email), plus `email` and `profile`.
+3. **Audience:** user type *External*, then **Publish app** to move it from *Testing* to
+   **In production**. Google says the app needs verification: that's for apps offered to the
+   public, so don't submit it. Unverified, it works for up to 100 accounts and shows a
+   warning when you sign in.
+
+   *Prefer not to publish?* Leave it in *Testing* and add your Gmail addresses under **Test
+   users**; Google then ends the permission every 7 days, and you sign in again.
 
 ### 4. Create the OAuth client
 
@@ -67,14 +73,16 @@ In **APIs & Services → OAuth consent screen** (also called *Google Auth Platfo
 
 1. In the extension's popup, paste the client ID and click **Save**.
 2. Click **Add Google account** and sign in. Google shows *"Google hasn't verified this
-   app"*: it's your own app, so click **Continue**. Tick the Gmail permission (or **Select
-   all**).
+   app"*: it's your own app, so click **Advanced → Go to … (unsafe)** (or **Continue**). Tick
+   the Gmail permission (or **Select all**).
 3. Repeat for each account, then **Open All Inboxes**.
 
 ## Good to know
 
-- **Testing mode signs you out about once a week.** Google ends a Testing app's
-  permission after 7 days; the extension then asks you to sign in to that account again.
+- **Published (In production), unverified:** no weekly sign-in; at most 100 accounts can ever
+  sign in to your project, and each sees Google's warning screen once.
+- **Testing:** Google ends the permission every 7 days; the extension then asks you to sign
+  in to that account again.
 - **Moving the folder changes the extension's ID**, and so the redirect URI: add the new
   one to your OAuth client.
 - **Updating:** download the new version into the same folder (or `git pull`) and click
