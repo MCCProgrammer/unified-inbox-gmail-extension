@@ -93,6 +93,28 @@ In **APIs & Services → OAuth consent screen** (also called *Google Auth Platfo
   the reload icon in `chrome://extensions`.
 - **Removing an account** in the popup also revokes its token at Google.
 
+## Sharing it with friends
+
+One OAuth client can serve you and the people you give the extension to (up to 100
+accounts in total), so they don't need a Google Cloud project of their own:
+
+1. Create a key once, and keep it outside the repository: it fixes the extension's ID.
+
+   ```sh
+   openssl genrsa -out ~/unified-inbox-key.pem 2048
+   ```
+
+2. Build with your client ID; the script prints the redirect URI to add to the client.
+
+   ```sh
+   scripts/build-shared.sh ~/unified-inbox-key.pem 1234-abc.apps.googleusercontent.com
+   ```
+
+3. Send them `dist/unified-inbox-shared-<version>.zip`. They unzip it, load the
+   `unified-inbox` folder with **Load unpacked**, and sign in; there's nothing to paste.
+
+Use the same key for every new version, or the ID (and the redirect URI) changes.
+
 ## How it works
 
 | Part | What it does |
