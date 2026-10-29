@@ -68,9 +68,11 @@ In **APIs & Services → OAuth consent screen** (also called *Google Auth Platfo
 
 1. **Clients** (or **Credentials → Create credentials → OAuth client ID**).
 2. Application type: **Web application**.
-3. Under **Authorized redirect URIs**, add the redirect URI from the popup (step 1.3),
+3. Leave **Authorized JavaScript origins** empty. If an empty row is there ("Invalid
+   origin: URI must not be empty"), delete it with its bin icon.
+4. Under **Authorized redirect URIs**, add the redirect URI from the popup (step 1.3),
    exactly as shown, with the trailing `/`.
-4. Create it and copy the **Client ID** (`…apps.googleusercontent.com`). There is no client
+5. Create it and copy the **Client ID** (`…apps.googleusercontent.com`). There is no client
    secret to use: the extension uses the browser flow.
 
 ### 5. Connect your accounts
