@@ -1,0 +1,4 @@
+# Your OAuth client ID (README, "Set up", step 4). Paste it after the =, save this file
+# and click the reload icon in chrome://extensions. It stays here if you remove the
+# extension and load this folder again.
+clientId=
