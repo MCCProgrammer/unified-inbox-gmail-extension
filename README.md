@@ -77,10 +77,10 @@ In **APIs & Services → OAuth consent screen** (also called *Google Auth Platfo
 
 ### 5. Connect your accounts
 
-1. In the extension's popup, paste the client ID and click **Save**. Or put it in a file
-   named `client-id.txt` in the extension folder (one line, just the ID) and reload the
-   extension: the file stays when you remove the extension and load it again, so you don't
-   paste it again. Git ignores it.
+1. Open `client-id.txt` in the extension folder, paste the client ID after `clientId=`, save
+   and click the reload icon in `chrome://extensions`. The file stays when you remove the
+   extension and load the folder again, so you never paste it twice. (Or paste it in the
+   popup and click **Save**; that one is lost when the extension is removed.)
 2. Click **Add Google account** and sign in. Google shows *"Google hasn't verified this
    app"*: it's your own app, so click **Advanced → Go to … (unsafe)** (or **Continue**). Tick
    the Gmail permission (or **Select all**).
@@ -105,7 +105,7 @@ In **APIs & Services → OAuth consent screen** (also called *Google Auth Platfo
 | `background/service-worker.js` | Sign-in per account (`chrome.identity.launchWebAuthFlow`, token flow), Gmail API calls paced under Google's per-minute quota, periodic sync with `chrome.alarms`, notifications |
 | `content/inject.js` | The All Inboxes view inside Gmail: list, reader, actions, labels, search, replies |
 | `popup/` | Accounts, your OAuth client ID, sync |
-| `background/config.js` | Reads your client ID from `chrome.storage.local`, or from `client-id.txt` |
+| `background/config.js` | Reads your client ID from `chrome.storage.local`, or from `clientId=` in `client-id.txt` |
 
 Requests are paced per account with a token bucket (a burst of 3,000 units, then 10,000 a
 minute, below Gmail's 15,000), keeping a reserve so opening or archiving a conversation

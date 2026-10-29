@@ -97,11 +97,12 @@ async function addAccount(loginHint) {
 
 const CLIENT_ID_PATTERN = /^[\w-]+\.apps\.googleusercontent\.com$/;
 
-// client-id.txt in the extension folder (optional, not in git) survives removing the extension.
+// clientId= in client-id.txt (extension folder) survives removing the extension.
 async function readClientIdFile() {
   try {
     const res = await fetch(chrome.runtime.getURL('client-id.txt'));
-    return res.ok ? (await res.text()).trim() : '';
+    const text = res.ok ? await res.text() : '';
+    return (text.match(/^\s*clientId\s*=(.*)$/m)?.[1] || '').trim();
   } catch {
     return '';
   }
