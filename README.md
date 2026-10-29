@@ -28,7 +28,7 @@ you run it with **your own Google Cloud project**. An app that you publish for y
 without verification works for up to 100 Google accounts, which is plenty for your own
 inboxes. It takes about ten minutes, once.
 
-**Coming from the Chrome Web Store version?** It stops working on 5 November 2026. Follow
+**Coming from the Chrome Web Store version?** It no longer signs in to Gmail. Follow
 [Set up](#set-up) below, add your accounts again in the new extension, then remove the
 store version from `chrome://extensions`.
 
