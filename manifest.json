@@ -48,6 +48,6 @@
     "https://www.googleapis.com/*"
   ],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; connect-src data: https://gmail.googleapis.com https://www.googleapis.com https://oauth2.googleapis.com https://accounts.google.com"
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' data: https://gmail.googleapis.com https://www.googleapis.com https://oauth2.googleapis.com https://accounts.google.com"
   }
 }
