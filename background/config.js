@@ -6,8 +6,8 @@
    project (see the README, "Set up"): a "Web application" client whose
    Authorized redirect URIs include this extension's
    https://<extension-id>.chromiumapp.org/ (shown in the popup). The client
-   ID is pasted in the popup and kept in chrome.storage.local, or written in
-   client-id.txt in the extension folder (not in git), which stays there when
+   ID is pasted in the popup and kept in chrome.storage.local, or written after
+   clientId= in client-id.txt in the extension folder, which stays there when
    the extension is removed and loaded again.
    ================================================================ */
 
@@ -25,7 +25,8 @@ export async function getClientId() {
 async function readClientIdFile() {
   try {
     const res = await fetch(chrome.runtime.getURL('client-id.txt'));
-    return res.ok ? (await res.text()).trim() : '';
+    const text = res.ok ? await res.text() : '';
+    return (text.match(/^\s*clientId\s*=(.*)$/m)?.[1] || '').trim();
   } catch {
     return ''; // no file
   }
