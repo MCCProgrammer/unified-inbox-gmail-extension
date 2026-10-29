@@ -97,15 +97,26 @@ async function addAccount(loginHint) {
 
 const CLIENT_ID_PATTERN = /^[\w-]+\.apps\.googleusercontent\.com$/;
 
+// client-id.txt in the extension folder (optional, not in git) survives removing the extension.
+async function readClientIdFile() {
+  try {
+    const res = await fetch(chrome.runtime.getURL('client-id.txt'));
+    return res.ok ? (await res.text()).trim() : '';
+  } catch {
+    return '';
+  }
+}
+
 // Sign-in uses the OAuth client of the user's own Google Cloud project (README, "Set up").
 async function setupClient() {
   const setup = document.getElementById('setup');
   const input = document.getElementById('client-id-input');
   const { oauthClientId = '' } = await chrome.storage.local.get('oauthClientId');
+  const clientId = oauthClientId || await readClientIdFile();
   const redirectUri = chrome.identity.getRedirectURL();
   document.getElementById('redirect-uri').textContent = redirectUri;
-  input.value = oauthClientId;
-  setup.hidden = CLIENT_ID_PATTERN.test(oauthClientId);
+  input.value = clientId;
+  setup.hidden = CLIENT_ID_PATTERN.test(clientId);
 
   document.getElementById('copy-redirect-btn').addEventListener('click', async () => {
     await navigator.clipboard.writeText(redirectUri);
